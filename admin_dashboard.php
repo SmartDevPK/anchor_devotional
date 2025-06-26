@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $timestamp = time();
             $imagePath = "$uploadDir/devotion_cover_" . $timestamp . ".jpg";
 
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+            if (isset($_FILES['image']) && move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
                 $pdfPath = null;
 
                 $stmt = $conn->prepare("INSERT INTO devotion (image_path, topic, date, pdf_path) VALUES (?, ?, ?, ?)");
@@ -72,11 +72,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Dashboard - Upload Devotion</title>
     <style>
+        /* Reset some default styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="file"],
+        button,
+        textarea {
+            width: 100%;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="file"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 6px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         .message {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            width: 400px;
+            padding: 12px 16px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
         }
 
         .error {
@@ -94,26 +169,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <h2>Upload Devotion</h2>
+    <div class="container">
+        <h2>Upload Devotion</h2>
 
-    <?php if ($errorMessage): ?>
-        <div class="message error"><?php echo htmlspecialchars($errorMessage); ?></div>
-    <?php elseif ($successMessage): ?>
-        <div class="message success"><?php echo htmlspecialchars($successMessage); ?></div>
-    <?php endif; ?>
+        <?php if ($errorMessage): ?>
+            <div class="message error"><?php echo htmlspecialchars($errorMessage); ?></div>
+        <?php elseif ($successMessage): ?>
+            <div class="message success"><?php echo htmlspecialchars($successMessage); ?></div>
+        <?php endif; ?>
 
-    <form action="admin_dashboard.php" method="POST" enctype="multipart/form-data">
-        <label>Devotion Topic:</label><br />
-        <input type="text" name="topic" required /><br /><br />
+        <form action="admin_dashboard.php" method="POST" enctype="multipart/form-data">
+            <label for="topic">Devotion Topic:</label>
+            <input type="text" name="topic" id="topic" required />
 
-        <label>Date:</label><br />
-        <input type="date" name="date" required /><br /><br />
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" required />
 
-        <label>Devotion Cover Image:</label><br />
-        <input type="file" name="image" accept="image/*" required /><br /><br />
+            <label for="image">Devotion Cover Image:</label>
+            <input type="file" name="image" id="image" accept="image/*" required />
 
-        <button type="submit">Upload Devotion</button>
-    </form>
+            <button type="submit">Upload Devotion</button>
+        </form>
+    </div>
 </body>
 
 </html>

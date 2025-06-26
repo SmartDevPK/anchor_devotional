@@ -1,0 +1,137 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
+// DB connection
+$host = "localhost";
+$port = 3307;
+$username = "root";
+$password = "";
+$database = "prayer_db";
+
+$conn = new mysqli($host, $username, $password, $database, $port);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM devotions ORDER BY devotion_date DESC";
+$result = $conn->query($sql);
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Daily Devotions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .devotion-card {
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+        }
+
+        .devotion-card:hover {
+            transform: scale(1.01);
+        }
+
+        /* Image styling */
+        .devotion-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .devotion-card h3 {
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        .devotion-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .devotion-date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #888;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Past Devotions</h1>
+
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='devotion-card'>";
+
+                if (!empty($row['image'])) {
+                    echo "<img class='devotion-image' src='" . htmlspecialchars($row['image']) . "' alt='Devotion Image'>";
+                }
+
+                echo "<h3>" . htmlspecialchars($row['title']) . "</h3>";
+                echo "<div class='devotion-date'>" . htmlspecialchars(date("F j, Y", strtotime($row['devotion_date']))) . "</div>";
+                echo "<p>" . nl2br(htmlspecialchars($row['excerpt'])) . "</p>";
+
+                if (!empty($row['read_more_link'])) {
+                    echo "<a class='read-more' href='" . htmlspecialchars($row['read_more_link']) . "' target='_blank'>Read More &raquo;</a>";
+                }
+
+                echo "</div>";
+            }
+        } else {
+            echo "<p class='no-data'>No devotions found.</p>";
+        }
+
+        $conn->close();
+        ?>
+    </div>
+</body>
+
+</html>

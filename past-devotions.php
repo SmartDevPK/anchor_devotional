@@ -331,91 +331,47 @@
                 </form>
             </div>
 
+            <?php
+            error_reporting(E_ALL);
+            ini_set("display_errors", 1);
+
+            $host = "localhost";
+            $port = 3307;
+            $username = "root";
+            $password = "";
+            $database = "prayer_db";
+
+            // Connect to the database
+            $conn = new mysqli($host, $username, $password, $database, $port);
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Fetch devotions ordered by date descending
+            $result = $conn->query("SELECT * FROM devotions ORDER BY devotion_date DESC");
+            ?>
+
             <div class="devotions-grid">
-                <!-- Devotion Card 1 -->
-                <div class="devotion-card">
-                    <img src="Untitled design.png" alt="Devotion Cover" class="devotion-image">
-                    <div class="devotion-content">
-                        <div class="devotion-date">June 5, 2025</div>
-                        <h3 class="devotion-title">Surviving the HEAT</h3>
-                        <p class="devotion-excerpt">Heat in the Bible and in life generally signifies trouble, hardship,
-                            suffering, adversity, and trails...</p>
-                        <a href="todays-devotion.html" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="devotion-card">
+                        <img src="uploads/<?= htmlspecialchars($row['image']) ?>" alt="Devotion Cover"
+                            class="devotion-image">
+                        <div class="devotion-content">
+                            <div class="devotion-date"><?= date("F j, Y", strtotime($row['devotion_date'])) ?></div>
+                            <h3 class="devotion-title"><?= htmlspecialchars($row['title']) ?></h3>
+                            <p class="devotion-excerpt"><?= htmlspecialchars($row['excerpt']) ?></p>
+                            <a href="<?= htmlspecialchars($row['read_more_link']) ?>" class="read-more">
+                                Read More <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Devotion Card 2 -->
-                <div class="devotion-card">
-                    <img src="Untitled design.png" alt="Devotion Cover" class="devotion-image">
-                    <div class="devotion-content">
-                        <div class="devotion-date">June 4, 2025</div>
-                        <h3 class="devotion-title">The Peace of God</h3>
-                        <p class="devotion-excerpt">In a world filled with anxiety and uncertainty, God offers us a
-                            peace that surpasses all understanding...</p>
-                        <a href="#" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Devotion Card 3 -->
-                <div class="devotion-card">
-                    <img src="Untitled design.png" alt="Devotion Cover" class="devotion-image">
-                    <div class="devotion-content">
-                        <div class="devotion-date">June 3, 2025</div>
-                        <h3 class="devotion-title">Walking in Faith</h3>
-                        <p class="devotion-excerpt">Faith is not the absence of doubt, but the decision to trust God
-                            even when circumstances seem impossible...</p>
-                        <a href="#" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Devotion Card 4 -->
-                <div class="devotion-card">
-                    <img src="Untitled design.png" alt="Devotion Cover" class="devotion-image">
-                    <div class="devotion-content">
-                        <div class="devotion-date">June 2, 2025</div>
-                        <h3 class="devotion-title">The Power of Prayer</h3>
-                        <p class="devotion-excerpt">Prayer is not just asking God for things, but aligning our hearts
-                            with His will and purposes...</p>
-                        <a href="#" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Devotion Card 5 -->
-                <div class="devotion-card">
-                    <img src="devotion-5.jpg" alt="Devotion Cover" class="devotion-image">
-                    <div class="devotion-content">
-                        <div class="devotion-date">June 1, 2025</div>
-                        <h3 class="devotion-title">God's Unfailing Love</h3>
-                        <p class="devotion-excerpt">No matter what we've done or where we've been, God's love remains
-                            constant and unchanging...</p>
-                        <a href="#" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Devotion Card 6 -->
-                <div class="devotion-card">
-                    <img src="devotion-6.jpg" alt="Devotion Cover" class="devotion-image">
-                    <div class="devotion-content">
-                        <div class="devotion-date">May 31, 2025</div>
-                        <h3 class="devotion-title">Finding Strength in Weakness</h3>
-                        <p class="devotion-excerpt">When we are weak, then we are strong, because God's power is made
-                            perfect in our weakness...</p>
-                        <a href="#" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
+                <?php endwhile; ?>
             </div>
+
+            <?php
+            $conn->close();
+            ?>
 
             <div class="pagination">
                 <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
