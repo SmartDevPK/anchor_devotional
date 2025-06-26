@@ -56,7 +56,6 @@ $result = $conn->query($sql);
             transform: scale(1.01);
         }
 
-        /* Image styling */
         .devotion-image {
             width: 100%;
             max-height: 300px;
@@ -99,6 +98,39 @@ $result = $conn->query($sql);
             color: #888;
             font-size: 18px;
         }
+
+        li a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        li a:hover,
+        li a:focus {
+            background-color: #0056b3;
+            outline: none;
+        }
+
+        .delete-button {
+            margin-top: 15px;
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 
@@ -123,6 +155,13 @@ $result = $conn->query($sql);
                     echo "<a class='read-more' href='" . htmlspecialchars($row['read_more_link']) . "' target='_blank'>Read More &raquo;</a>";
                 }
 
+                // Delete form for each devotion
+                echo "<form method='POST' action='delete_devotions.php' onsubmit='return confirm(\"Are you sure you want to delete this devotion?\");'>";
+                echo "<input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "' />";
+                echo "<input type='hidden' name='table' value='devotions' />";
+                echo "<button type='submit' class='delete-button'>Delete</button>";
+                echo "</form>";
+
                 echo "</div>";
             }
         } else {
@@ -131,6 +170,7 @@ $result = $conn->query($sql);
 
         $conn->close();
         ?>
+        <li><a href="dashboardForm.php">Return to Dashboard</a></li>
     </div>
 </body>
 

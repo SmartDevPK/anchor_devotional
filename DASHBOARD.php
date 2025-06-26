@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -167,6 +168,32 @@ $conn->close();
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
+        li a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        li a:hover,
+        li a:focus {
+            background-color: #0056b3;
+            outline: none;
+        }
+
+        /* Remove default list styling and spacing for the single link */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0 0;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -198,6 +225,10 @@ $conn->close();
 
             <button type="submit">Add Devotion</button>
         </form>
+
+        <ul>
+            <li><a href="dashboardForm.php">Return to Dashboard</a></li>
+        </ul>
     </div>
 </body>
 

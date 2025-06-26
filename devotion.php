@@ -95,6 +95,44 @@ $result = $conn->query($sql);
             color: #888;
             font-size: 18px;
         }
+
+        .delete-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        li a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        li a:hover,
+        li a:focus {
+            background-color: #0056b3;
+            outline: none;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 40px;
+        }
     </style>
 </head>
 
@@ -120,6 +158,13 @@ $result = $conn->query($sql);
                             Download PDF &raquo;
                         </a>
                     <?php endif; ?>
+
+                    <!-- Delete Form -->
+                    <form method="POST" action="delete_devotion.php"
+                        onsubmit="return confirm('Are you sure you want to delete this devotion?');">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($row['id']) ?>" />
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
@@ -127,6 +172,10 @@ $result = $conn->query($sql);
         <?php endif; ?>
 
         <?php $conn->close(); ?>
+
+        <div class="footer-link">
+            <li><a href="dashboardForm.php">Return to Dashboard</a></li>
+        </div>
     </div>
 </body>
 

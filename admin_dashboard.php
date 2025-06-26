@@ -165,6 +165,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #9c9;
             color: #060;
         }
+
+        li a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        li a:hover,
+        li a:focus {
+            background-color: #0056b3;
+            outline: none;
+        }
     </style>
 </head>
 
@@ -190,6 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <button type="submit">Upload Devotion</button>
         </form>
+        <li><a href="dashboardForm.php">Return to Dashboard</a></li>
     </div>
 </body>
 
