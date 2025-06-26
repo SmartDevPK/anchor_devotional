@@ -1305,7 +1305,7 @@
                 </div>
 
                 <div class="devotion-actions">
-                    <a href="#" class="download-btn">
+                    <a href="downloads/devotional.pdf" class="download-btn">
                         <i class="fas fa-download"></i> Download Full Devotional
                     </a>
                     <div class="social-share">

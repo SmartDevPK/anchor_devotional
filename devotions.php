@@ -131,6 +131,21 @@ $result = $conn->query($sql);
         .delete-button:hover {
             background-color: #c82333;
         }
+
+        .update-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .update-link:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
@@ -155,12 +170,15 @@ $result = $conn->query($sql);
                     echo "<a class='read-more' href='" . htmlspecialchars($row['read_more_link']) . "' target='_blank'>Read More &raquo;</a>";
                 }
 
-                // Delete form for each devotion
-                echo "<form method='POST' action='delete_devotions.php' onsubmit='return confirm(\"Are you sure you want to delete this devotion?\");'>";
+                // Delete form
+                echo "<form method='POST' action='delete_devotions.php' onsubmit='return confirm(\"Are you sure you want to delete this devotion?\");' style='display: inline-block;'>";
                 echo "<input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "' />";
                 echo "<input type='hidden' name='table' value='devotions' />";
                 echo "<button type='submit' class='delete-button'>Delete</button>";
                 echo "</form>";
+
+                // Update link
+                echo "<a href='update_devotion.php?id=" . urlencode($row['id']) . "' class='update-link'>Update</a>";
 
                 echo "</div>";
             }

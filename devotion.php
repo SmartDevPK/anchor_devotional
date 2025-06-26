@@ -164,6 +164,10 @@ $result = $conn->query($sql);
                         onsubmit="return confirm('Are you sure you want to delete this devotion?');">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($row['id']) ?>" />
                         <button type="submit" class="delete-button">Delete</button>
+                        <a href="update_devotion.php?id=<?= urlencode($row['id']) ?>"
+                            style="display: inline-block; padding: 8px 15px; background: #007BFF; color: #fff; border-radius: 4px; text-decoration: none; font-weight: bold;">
+                            Update
+                        </a>
                     </form>
                 </div>
             <?php endwhile; ?>
