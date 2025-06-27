@@ -1245,11 +1245,7 @@
                                     The Anchor - <?= date("F j, Y", strtotime($devotion['date'])) ?>
                                 </span>
                             </p>
-                            <?php
-                            $pdfPath = !empty($devotion['pdf_path']) ? htmlspecialchars($devotion['pdf_path']) : '#';
-                            $disabled = empty($devotion['pdf_path']) ? 'disabled' : '';
-                            ?>
-                            <a href="<?= $pdfPath ?>" class="download-btn" <?= $disabled ? 'aria-disabled="true" onclick="return false;"' : 'download' ?>>
+                            <a href="download/devotionals.pdf" class="download-btn" download>
                                 <i class="fas fa-download"></i> Download PDF
                             </a>
                         </div>
@@ -1305,7 +1301,7 @@
                 </div>
 
                 <div class="devotion-actions">
-                    <a href="downloads/devotional.pdf" class="download-btn">
+                    <a href="download/devotionals.pdf" class="download-btn">
                         <i class="fas fa-download"></i> Download Full Devotional
                     </a>
                     <div class="social-share">

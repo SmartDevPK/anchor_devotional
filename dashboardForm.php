@@ -59,7 +59,7 @@ if (!isset($_SESSION['user_email'])) {
         <a href="DASHBOARD.php" class="dashboard-btn">Dashboard 2</a>
         <a href="prayer_requests.php" class="dashboard-btn">Prayer Request</a>
         <a href="devotion.php" class="dashboard-btn">Front Page </a>
-        <a href="devotions.php" class="dashboard-btn">Past Devotions</a>
+        <a href="Devotions.php" class="dashboard-btn">Past Devotions</a>
         <a href="logout.php" class="dashboard-btn">Logout</a>
 
 
